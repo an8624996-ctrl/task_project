@@ -13,6 +13,11 @@ class AppImage{
   static const String circle_check = "$basePath/circle_check.png";
   static const String box = "$basePath/box.png";
   static const String maps = "$basePath/maps.png";
+  static const String set_profile = "$basePath/profile.png";
+  static const String star = "$basePath/star.png";
+  static const String loader = "$basePath/loader.png";
+  static const String man = "$basePath/mans.png";
+  static const String line= "$basePath/line.png";
 
 
 

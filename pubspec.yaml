@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   get: ^4.7.3
   pin_code_fields: ^8.0.1
+  http: ^1.6.0
+  shared_preferences: ^2.5.4
 
 
 dev_dependencies:
@@ -78,6 +80,15 @@ flutter:
   - assets/images/indonesia.png
   - assets/images/malaisia.png
   - assets/images/afganistan.png
+  - assets/images/profile.png
+  - assets/images/loader.png
+  - assets/images/star.png
+  - assets/images/mans.png
+  - assets/images/line.png
+  - assets/images/headphone.png
+  - assets/images/mobile.png
+  - assets/images/light.png
+  - assets/images/fan.png
 
 
 

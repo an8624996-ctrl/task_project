@@ -18,6 +18,7 @@ class AppStrings{
   static const resetDes = "Your password must be at least 8 characters long and include a combination of letters, numbers";
   static const verifyCode = "Verify Code";
   static const  location ="Enable Location";
+  static const  setProfile ="Set Up Profile";
   static const locationDes = "Kindly allow us to access your location to provide you with suggestions for nearby salons";
   static const verifyDes = "Please enter the code we just sent to email pristia@gmail.com";
 
