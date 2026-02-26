@@ -61,6 +61,7 @@ class _LocationAccessScreenState extends State<LocationAccessScreen> {
                   SizedBox(height: 24),
                   GestureDetector(
                     onTap: (){
+                      Get.toNamed(AppRoute.selectScreen);
                     },
                     child: Center(
                       child: Container(
@@ -85,11 +86,18 @@ class _LocationAccessScreenState extends State<LocationAccessScreen> {
                   ),
 
                   SizedBox(height: 24),
-                  Text("Skip, Not Now",
-                    style: TextStyle(
-                      color: Color(0xff2D2D2D),
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                  GestureDetector(
+                    onTap: () {
+
+                      Get.toNamed(AppRoute.setScreen);
+                    },
+                    child: const Text(
+                      "Skip, Not Now",
+                      style: TextStyle(
+                        color: Color(0xff2D2D2D),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],

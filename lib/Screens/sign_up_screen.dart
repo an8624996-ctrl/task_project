@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:task_project/core/AppRoute/app_route.dart';
 import 'package:task_project/core/constants/app_strings.dart';
 
 import '../Utills/AppImage/app_image.dart';
@@ -11,6 +16,62 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  bool isLoading = false;
+
+  Future<void> signUpUser() async {
+    final email = emailController.text.trim();
+    final name = nameController.text.trim();
+    final password = passwordController.text.trim();
+
+    if (email.isEmpty || name.isEmpty || password.isEmpty) {
+      Get.snackbar("Error", "All fields are required",
+          snackPosition: SnackPosition.BOTTOM);
+      return;
+    }
+
+    setState(() => isLoading = true);
+
+    final url = Uri.parse(
+        "https://product-management-seven-xi.vercel.app/api/v1/users/register");
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body: jsonEncode({
+          "fullName": name,
+          "email": email,
+          "password": password,
+          "fcmToken": "",
+        }),
+      );
+
+      final data = jsonDecode(response.body);
+      print("SIGNUP RESPONSE: ${response.body}");
+
+      if ((response.statusCode == 200 || response.statusCode == 201) &&
+          data['success'] == true) {
+        showSuccessDialog();
+      } else {
+        Get.snackbar("Signup Failed", data['message'] ?? "Error",
+            snackPosition: SnackPosition.BOTTOM);
+      }
+    } catch (e) {
+      Get.snackbar("Error", e.toString(),
+          snackPosition: SnackPosition.BOTTOM);
+    } finally {
+      setState(() => isLoading = false);
+    }
+  }
+
+
 
   void showSuccessDialog() {
     showDialog(
@@ -152,6 +213,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(
                 height: 56,
                 child: TextField(
+                  controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     labelText: "",
@@ -183,7 +245,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(
                 height: 56,
                 child: TextField(
-                  keyboardType: TextInputType.emailAddress,
+                  controller: nameController,
+                  keyboardType: TextInputType.name,
                   decoration: InputDecoration(
                     labelText: "",
                     border: OutlineInputBorder(
@@ -214,6 +277,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: SizedBox(
                       height: 56,
                       child: TextField(
+                        controller: passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: "",
@@ -282,7 +346,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
               SizedBox(height: 24),
               GestureDetector(
-                onTap: () => showSuccessDialog(),
+                onTap: () => signUpUser(),
                 child: Center(
                   child: Container(
                     alignment: Alignment.center,
@@ -312,12 +376,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "Already have an account?",
-                        style: TextStyle(
-                          color: Color(0xff636F85),
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
+                      GestureDetector(
+                        onTap: (){
+                          Get.toNamed(AppRoute.loginScreen);
+                        },
+                        child: Text(
+                          "Already have an account?",
+                          style: TextStyle(
+                            color: Color(0xff636F85),
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                          ),
                         ),
                       ),
                       SizedBox(width: 4),
@@ -339,4 +408,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    nameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 }
+
+
+
+

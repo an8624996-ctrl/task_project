@@ -15,6 +15,8 @@ class VerifyScreen extends StatefulWidget {
 
 class _VerifyScreenState extends State<VerifyScreen> {
 
+  final TextEditingController otpController = TextEditingController();
+
   void showSuccessDialog() {
     showDialog(
       context: context,
@@ -111,7 +113,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
   }
 
 
-  final TextEditingController otpController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -200,3 +202,8 @@ class _VerifyScreenState extends State<VerifyScreen> {
     );
   }
 }
+
+
+
+
+
